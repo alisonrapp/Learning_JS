@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+  <script>
+    var target;
+    var guesses = 0;
+    var colors = ["seashell", "honeydew", "mintcream", "peachpuff", "thistle", "palegreen", "paleturquoise", "powderblue", "whitesmoke"];
+    colors = colors.sort();
+    var colors_alert = colors.join ( ", " );
+    var prompt_text;
+    var player_input;
+    var finished = false;
+
+function do_game() {
+  var random_number = Math.random() * colors.length - 1;
+  var random_number_integer = Math.floor(random_number);
+  target = random_number_integer;
+  var answer = String(colors[random_number_integer]);
+  alert("Dev note: The correct answer is " + answer);
+
+  while (!finished) {
+    player_input_text=prompt("I'm thinking of one of these colors: \n \n" + colors_alert + "\n \nCan you guess which one?");
+    player_input = colors.indexOf(player_input_text);
+    finished=check_guess();
+  }
+function check_guess() {
+  if (player_input == -1) {
+    alert("Hmm I don't recognize that color. Try again!");
+    guesses +=1;
+    return false;
+  }
+  if (player_input > target) {
+    alert("Aw shucks - that's not right.\n \n Here's a hint: Your answer was alphabetically higher than the one I picked. Go ahead and try again!");
+    guesses +=1;
+    return false;
+  }
+  if (player_input < target) {
+    alert("Darn - that's not correct. \n \n Do you want a hint? Your color was alphabetically lower than the one I picked. Try again!")
+    guesses +=1;
+    return false;
+  }
+  elem_body = document.getElementsByTagName("body")[0];
+  elem_body.style.background = colors[target];
+  alert("Wow, congratulations! You got it right! It took you " + guesses + " guesses to figure out the answer.");
+  return true;
+}
+}
+  </script>
+
+</head>
+<body onload="do_game()">
+</body>
